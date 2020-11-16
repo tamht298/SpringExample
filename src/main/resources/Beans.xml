@@ -9,13 +9,28 @@
            http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
+    <bean id="drawingProperties"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:info.properties" />
+    </bean>
+
     <bean id="shape" class="vn.com.tma.models.Circle" scope="prototype">
-        <aop:scoped-proxy/>
 
     </bean>
+
+<!--    <bean id="drawing" class="vn.com.tma.models.Drawing" scope="singleton">-->
+<!--        <constructor-arg ref="shape"></constructor-arg>-->
+
+<!--        &lt;!&ndash;        Create difference instance when call singleton&ndash;&gt;-->
+<!--        &lt;!&ndash;        <lookup-method bean="shape" name="getShape"/>&ndash;&gt;-->
+<!--    </bean>-->
 
     <bean id="drawing" class="vn.com.tma.models.Drawing" scope="singleton">
         <constructor-arg ref="shape"></constructor-arg>
-
+        <property name="author" value="${drawing.author}"/>
+        <lookup-method bean="shape" name="getShape"/>
     </bean>
+
+
+
 </beans>
